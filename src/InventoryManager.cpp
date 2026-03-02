@@ -43,7 +43,7 @@ bool InventoryManager::addReceipt(const QDate &date,
     mov.bindValue(":date", date);
     mov.bindValue(":mat", material);
     mov.bindValue(":qty", qty);
-    mov.bindValue(":ref", tr("Receipt #%1").arg(query.lastInsertId().toInt()));
+    mov.bindValue(":ref", QString("Receipt #%1").arg(query.lastInsertId().toInt()));
     if (!mov.exec()) {
         qDebug() << "Failed to record movement:" << mov.lastError().text();
         // not fatal

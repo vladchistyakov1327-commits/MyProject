@@ -19,7 +19,8 @@ set(PROJECT_SOURCES
     src/main.cpp
     src/MainWindow.h
     src/MainWindow.cpp
-    
+
+    # Domain models
     src/Material.h
     src/Material.cpp
     src/Norm.h
@@ -28,12 +29,28 @@ set(PROJECT_SOURCES
     src/Receipt.cpp
     src/Movement.h
     src/Movement.cpp
-    
+
+    # Database & inventory logic
     src/DatabaseManager.h
     src/DatabaseManager.cpp
     src/InventoryManager.h
     src/InventoryManager.cpp
-    
+
+    # Notifications
+    src/NotificationSystem.h
+    src/NotificationSystem.cpp
+    src/NotificationSettingsDialog.h
+    src/NotificationSettingsDialog.cpp
+
+    # Employee rating / gamification
+    src/EmployeeRating.h
+    src/EmployeeRating.cpp
+
+    # Dashboard
+    src/DashboardForm.h
+    src/DashboardForm.cpp
+
+    # Materials / inventory forms
     src/MaterialDelegate.h
     src/MaterialDelegate.cpp
     src/MaterialsForm.h
@@ -44,18 +61,26 @@ set(PROJECT_SOURCES
     src/ShipmentForm.cpp
     src/MovementForm.h
     src/MovementForm.cpp
-    
+
+    # Products & consumption norms forms
+    src/ProductsForm.h
+    src/ProductsForm.cpp
+    src/NormsForm.h
+    src/NormsForm.cpp
+
+    # Staff / salary forms
     src/EmployeesForm.h
     src/EmployeesForm.cpp
     src/SalaryForm.h
     src/SalaryForm.cpp
     src/PerformedForm.h
     src/PerformedForm.cpp
-    
-    src/NotificationSystem.h
-    src/NotificationSystem.cpp
-    src/EmployeeRating.h
-    src/EmployeeRating.cpp
+
+    # Rating & notifications forms
+    src/RatingForm.h
+    src/RatingForm.cpp
+    src/NotificationsForm.h
+    src/NotificationsForm.cpp
 )
 
 add_executable(ProductionManager ${PROJECT_SOURCES})

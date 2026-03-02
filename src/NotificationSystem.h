@@ -24,7 +24,7 @@ public:
     void setShowOnStartup(bool show);
 
 signals:
-    void newNotification(NotificationType type, const QString &message, int priority);
+    void newNotification(int type, const QString &message, int priority);
 
 private slots:
     void checkSalaryMismatch();
