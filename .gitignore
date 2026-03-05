@@ -1,0 +1,17 @@
+﻿# Временные файлы
+*.tmp
+*.log
+*.cache
+*.bak
+*.obj
+*.exe
+*.pdb
+*.ilk
+
+# Папки
+bin/
+obj/
+Debug/
+Release/
+Backup_*/
+.vs/

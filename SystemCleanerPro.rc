@@ -1,0 +1,91 @@
+// SystemCleanerPro.rc - файл ресурсов
+
+#include "Resource.h"
+
+// Иконки
+IDI_MAIN_ICON   ICON    "icon.ico"
+IDI_LOGO        ICON    "logo.ico"
+
+// Версия
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+FILEFLAGSMASK   0x3fL
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041904B0"
+        BEGIN
+            VALUE "CompanyName", "System Cleaner Pro"
+            VALUE "FileDescription", "System Cleaner Pro - Диагностика и очистка Windows"
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "InternalName", "SystemCleanerPro"
+            VALUE "LegalCopyright", "Copyright (C) 2024"
+            VALUE "OriginalFilename", "SystemCleanerPro.exe"
+            VALUE "ProductName", "System Cleaner Pro"
+            VALUE "ProductVersion", "1.0.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x419, 1200
+    END
+END
+
+// Меню
+IDM_MAIN MENU
+BEGIN
+    POPUP "&Файл"
+    BEGIN
+        MENUITEM "&Экспорт отчета...",        IDM_FILE_EXPORT
+        MENUITEM SEPARATOR
+        MENUITEM "&Выход",                     IDM_FILE_EXIT
+    END
+    POPUP "&Вид"
+    BEGIN
+        MENUITEM "&Обновить",                  IDM_VIEW_REFRESH
+        MENUITEM "&Показать отчет",            IDM_VIEW_REPORT
+    END
+    POPUP "&Инструменты"
+    BEGIN
+        MENUITEM "&Настройки...",              IDM_TOOLS_SETTINGS
+        MENUITEM "&Точка восстановления",      IDM_TOOLS_RESTORE
+        MENUITEM "&Планировщик...",            IDM_TOOLS_SCHEDULER
+    END
+    POPUP "&Справка"
+    BEGIN
+        MENUITEM "&О программе...",             IDM_HELP_ABOUT
+    END
+END
+
+// Диалог настроек
+IDD_SETTINGS DIALOGEX 0, 0, 300, 200
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Настройки"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL "Темная тема", IDC_CHECK_SYSTEM, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 10, 100, 10
+    CONTROL "Подтверждать опасные операции", IDC_CHECK_BROWSERS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 25, 150, 10
+    CONTROL "Создавать точку восстановления", IDC_CHECK_LOGS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 40, 150, 10
+    CONTROL "Режим эксперта", IDC_CHECK_UPDATES, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 55, 100, 10
+    
+    PUSHBUTTON "OK", IDOK, 180, 160, 50, 14
+    PUSHBUTTON "Отмена", IDCANCEL, 235, 160, 50, 14
+END
+
+// Диалог о программе
+IDD_ABOUT DIALOGEX 0, 0, 250, 150
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "О программе"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT "System Cleaner Pro v1.0", IDC_STATIC, 50, 20, 150, 20
+    LTEXT "Комплексная диагностика и очистка Windows", IDC_STATIC, 30, 40, 200, 20
+    LTEXT "Copyright (C) 2024", IDC_STATIC, 70, 70, 150, 20
+    LTEXT "Все права защищены", IDC_STATIC, 70, 85, 150, 20
+    PUSHBUTTON "OK", IDOK, 100, 120, 50, 14
+END
