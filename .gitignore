@@ -1,0 +1,51 @@
+# Build directories
+build/
+build-*/
+cmake-build-*/
+out/
+
+# CMake generated
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# FetchContent / external deps
+_deps/
+
+# Qt generated
+*.moc
+moc_*.cpp
+moc_*.h
+ui_*.h
+qrc_*.cpp
+*.qrc.depends
+
+# Compiled output
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.pdb
+*.obj
+*.o
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.vcxproj
+*.vcxproj.filters
+*.sln
+.idea/
+*.suo
+*.aps
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

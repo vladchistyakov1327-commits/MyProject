@@ -1,0 +1,72 @@
+name: CI
+
+on:
+  push:
+    branches: [ NestingPRO ]
+  pull_request:
+    branches: [ NestingPRO ]
+
+jobs:
+  build:
+    name: Build & Test (Ubuntu · Qt 6)
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── Исходники ───────────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── Системные зависимости (OpenGL, zlib) ────────────────────────────
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y \
+            libgl1-mesa-dev \
+            libglu1-mesa-dev \
+            libxcb-xinerama0-dev \
+            libxcb-icccm4-dev \
+            libxcb-image0-dev \
+            libxcb-keysyms1-dev \
+            libxcb-randr0-dev \
+            libxcb-render-util0-dev \
+            libxcb-xkb-dev \
+            libxkbcommon-x11-dev \
+            zlib1g-dev
+
+      # ── Qt 6 ────────────────────────────────────────────────────────────
+      - name: Install Qt 6
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.7.3'
+          host: linux
+          target: desktop
+          arch: linux_gcc_64
+          # qtconcurrent входит в qtbase; дополнительных модулей не нужно
+          cache: true
+
+      # ── Кэш FetchContent (Clipper2, libdxfrw, Catch2) ──────────────────
+      - name: Cache FetchContent downloads
+        uses: actions/cache@v4
+        with:
+          path: build/_deps
+          key: fetchcontent-${{ runner.os }}-${{ hashFiles('CMakeLists.txt') }}
+          restore-keys: fetchcontent-${{ runner.os }}-
+
+      # ── Конфигурация CMake ──────────────────────────────────────────────
+      - name: Configure
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_PREFIX_PATH="${Qt6_DIR}" \
+            -DQT_NO_FONTCONFIG=ON
+
+      # ── Сборка ─────────────────────────────────────────────────────────
+      - name: Build
+        run: cmake --build build --parallel $(nproc)
+
+      # ── Тесты ──────────────────────────────────────────────────────────
+      - name: Test
+        working-directory: build
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: ctest --output-on-failure --parallel $(nproc)
