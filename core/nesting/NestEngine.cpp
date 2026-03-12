@@ -281,7 +281,7 @@ NestResult NestEngine::doNesting(const NestJob& job, QPromise<NestResult>* promi
         sr.utilizationPercent  = (sr.totalAreaMm2 > 0.0)
                              ? (usedArea / sr.totalAreaMm2) * 100.0 : 0.0;
 
-        AppLogger::instance().info(LogChannel::NESTING,
+        AppLogger::instance().log(LogLevel::INFO, LogChannel::NESTING,
             QString("Лист #%1 завершён: %2 деталей, утилизация=%.1f%%")
             .arg(sheetIdx + 1).arg(placedOnSheet).arg(sr.utilizationPercent),
             {}, {}, sheetIdx);
