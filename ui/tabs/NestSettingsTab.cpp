@@ -9,6 +9,7 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <QScrollArea>
+#include <QFrame>
 #include <QLabel>
 
 NestSettingsTab::NestSettingsTab(QWidget* parent) : QWidget(parent)

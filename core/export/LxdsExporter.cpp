@@ -17,6 +17,8 @@
 // Простой вариант без сжатия (stored):
 
 #include <zlib.h>
+#include <map>
+#include <algorithm>
 
 // ── Минимальный ZIP writer ────────────────────────────────────────────────────
 

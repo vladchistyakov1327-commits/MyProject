@@ -6,6 +6,8 @@
 #include <QString>
 #include <vector>
 #include <functional>
+#include <optional>
+#include <unordered_map>
 
 /// Ключ кэша NFP.
 struct NFPKey {

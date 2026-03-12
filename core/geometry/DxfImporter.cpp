@@ -13,6 +13,7 @@
 #include <cmath>
 #include <algorithm>
 #include <stdexcept>
+#include <map>
 
 static constexpr double kPi    = M_PI;
 static constexpr double kTwoPi = 2.0 * M_PI;
