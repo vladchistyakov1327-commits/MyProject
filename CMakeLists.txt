@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.20)
 project(TrafficMonitor
     VERSION     3.0.0
     DESCRIPTION "Wi-Fi Traffic Monitor v3.0"
-    LANGUAGES   CXX
+    LANGUAGES   CXX RC
 )
 
 # ============================================================
@@ -13,8 +13,12 @@ set(CMAKE_CXX_STANDARD          20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS        OFF)
 
-# Output to bin/ directory
+# Output to bin/ directory (for single-config generators: Ninja, Makefiles)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+# For MSVC multi-config generators (Visual Studio) — prevent config subfolder (bin/Release/ -> bin/)
+foreach(_cfg Release Debug RelWithDebInfo MinSizeRel)
+    set("CMAKE_RUNTIME_OUTPUT_DIRECTORY_${_cfg}" "${CMAKE_SOURCE_DIR}/bin")
+endforeach()
 
 # ============================================================
 # Source files

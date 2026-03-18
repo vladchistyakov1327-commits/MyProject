@@ -1,7 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <string>
-#include <format>
+#include <cstdio>
 #include <cstdint>
 
 namespace utils {
@@ -11,13 +11,16 @@ namespace utils {
 // e.g. 1536 -> "1.50 KB", 2097152 -> "2.00 MB"
 //-----------------------------------------------------------------------------
 inline std::wstring format_bytes(uint64_t bytes) {
+    wchar_t buf[64];
     if (bytes < 1024ULL)
-        return std::format(L"{} B", bytes);
-    if (bytes < 1024ULL * 1024)
-        return std::format(L"{:.2f} KB", bytes / 1024.0);
-    if (bytes < 1024ULL * 1024 * 1024)
-        return std::format(L"{:.2f} MB", bytes / (1024.0 * 1024));
-    return std::format(L"{:.2f} GB", bytes / (1024.0 * 1024 * 1024));
+        swprintf(buf, 64, L"%llu B", static_cast<unsigned long long>(bytes));
+    else if (bytes < 1024ULL * 1024)
+        swprintf(buf, 64, L"%.2f KB", bytes / 1024.0);
+    else if (bytes < 1024ULL * 1024 * 1024)
+        swprintf(buf, 64, L"%.2f MB", bytes / (1024.0 * 1024));
+    else
+        swprintf(buf, 64, L"%.2f GB", bytes / (1024.0 * 1024 * 1024));
+    return buf;
 }
 
 //-----------------------------------------------------------------------------
@@ -25,28 +28,35 @@ inline std::wstring format_bytes(uint64_t bytes) {
 // e.g.  512 -> "512 B/s", 1536 -> "1.5K/s", 2097152 -> "2.0M/s"
 //-----------------------------------------------------------------------------
 inline std::wstring format_speed(double bps) {
+    wchar_t buf[64];
     if (bps < 1024.0)
-        return std::format(L"{:.0f}B/s", bps);
-    if (bps < 1024.0 * 1024)
-        return std::format(L"{:.1f}K/s", bps / 1024.0);
-    if (bps < 1024.0 * 1024 * 1024)
-        return std::format(L"{:.1f}M/s", bps / (1024.0 * 1024));
-    return std::format(L"{:.2f}G/s", bps / (1024.0 * 1024 * 1024));
+        swprintf(buf, 64, L"%.0fB/s", bps);
+    else if (bps < 1024.0 * 1024)
+        swprintf(buf, 64, L"%.1fK/s", bps / 1024.0);
+    else if (bps < 1024.0 * 1024 * 1024)
+        swprintf(buf, 64, L"%.1fM/s", bps / (1024.0 * 1024));
+    else
+        swprintf(buf, 64, L"%.2fG/s", bps / (1024.0 * 1024 * 1024));
+    return buf;
 }
 
 //-----------------------------------------------------------------------------
 // Format a date as YYYY-MM-DD
 //-----------------------------------------------------------------------------
 inline std::wstring format_date(const SYSTEMTIME& st) {
-    return std::format(L"{:04d}-{:02d}-{:02d}", st.wYear, st.wMonth, st.wDay);
+    wchar_t buf[32];
+    swprintf(buf, 32, L"%04d-%02d-%02d", st.wYear, st.wMonth, st.wDay);
+    return buf;
 }
 
 //-----------------------------------------------------------------------------
 // Format datetime as YYYY-MM-DD HH:MM
 //-----------------------------------------------------------------------------
 inline std::wstring format_datetime(const SYSTEMTIME& st) {
-    return std::format(L"{:04d}-{:02d}-{:02d} {:02d}:{:02d}",
+    wchar_t buf[32];
+    swprintf(buf, 32, L"%04d-%02d-%02d %02d:%02d",
         st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute);
+    return buf;
 }
 
 //-----------------------------------------------------------------------------
@@ -54,7 +64,9 @@ inline std::wstring format_datetime(const SYSTEMTIME& st) {
 //-----------------------------------------------------------------------------
 inline std::wstring format_percent(double value, double total) {
     if (total <= 0.0) return L"0%";
-    return std::format(L"{:.1f}%", value / total * 100.0);
+    wchar_t buf[32];
+    swprintf(buf, 32, L"%.1f%%", value / total * 100.0);
+    return buf;
 }
 
 //-----------------------------------------------------------------------------
