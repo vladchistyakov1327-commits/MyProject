@@ -3,7 +3,7 @@
 #include "../utils/format_helpers.h"
 #include <fstream>
 #include <sstream>
-#include <format>
+#include <cstdio>
 #include <shlobj.h>
 #pragma comment(lib, "shell32.lib")
 
@@ -205,8 +205,9 @@ bool Persistence::export_csv(const std::vector<DayRecord>& records,
         uint32_t y = r.key / 10000;
         uint32_t m = (r.key / 100) % 100;
         uint32_t d = r.key % 100;
-        f << std::format(L"{:04d}-{:02d}-{:02d},{},{},{}\n",
-            y, m, d, r.rx, r.tx, r.total());
+        wchar_t buf[64];
+        swprintf(buf, 64, L"%04u-%02u-%02u", y, m, d);
+        f << buf << L"," << r.rx << L"," << r.tx << L"," << r.total() << L"\n";
     }
     return true;
 }
@@ -218,19 +219,19 @@ bool Persistence::export_txt(const std::vector<DayRecord>& records,
 
     f << L"Traffic Monitor - Export\n";
     f << L"========================\n\n";
-    f << std::format(L"{:<12} {:<14} {:<14} {:<14}\n",
-                     L"Date", L"Downloaded", L"Uploaded", L"Total");
+    f << L"Date         Downloaded     Uploaded       Total\n";
     f << std::wstring(55, L'-') << L"\n";
 
     for (const auto& r : records) {
         uint32_t y = r.key / 10000;
         uint32_t m = (r.key / 100) % 100;
         uint32_t d = r.key % 100;
-        f << std::format(L"{:04d}-{:02d}-{:02d}   {:<14} {:<14} {:<14}\n",
-            y, m, d,
-            utils::format_bytes(r.rx),
-            utils::format_bytes(r.tx),
-            utils::format_bytes(r.total()));
+        wchar_t buf[64];
+        swprintf(buf, 64, L"%04u-%02u-%02u", y, m, d);
+        f << buf << L"   "
+          << utils::format_bytes(r.rx) << L"   "
+          << utils::format_bytes(r.tx) << L"   "
+          << utils::format_bytes(r.total()) << L"\n";
     }
     return true;
 }
