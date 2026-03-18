@@ -95,8 +95,8 @@ private:
     // Previous raw counters for delta calculation
     uint64_t prev_rx_{ 0 };
     uint64_t prev_tx_{ 0 };
-    LARGE_INTEGER prev_time_{ {0, 0} };
-    LARGE_INTEGER freq_{ {0, 0} };
+    LARGE_INTEGER prev_time_{};
+    LARGE_INTEGER freq_{};
 };
 
 } // namespace core

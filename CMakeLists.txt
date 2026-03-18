@@ -81,7 +81,7 @@ if (MSVC)
         WIN32_LEAN_AND_MEAN
         NOMINMAX
         _WIN32_WINNT=0x0A00   # Windows 10+
-        NTDDI_VERSION=0x0A000000
+        NTDDI_VERSION=0x0A000003  # Windows 10 RS2 — required for DPI v2 APIs
     )
     # Embed manifest
     target_sources(TrafficMonitor PRIVATE resources/app.manifest)
@@ -90,7 +90,6 @@ elseif (MINGW OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     target_compile_options(TrafficMonitor PRIVATE
         -Wall
         -Wextra
-        -Wpedantic
         -Wno-unused-parameter
         -municode           # Unicode entry point
     )
@@ -100,7 +99,7 @@ elseif (MINGW OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         WIN32_LEAN_AND_MEAN
         NOMINMAX
         _WIN32_WINNT=0x0A00
-        NTDDI_VERSION=0x0A000000
+        NTDDI_VERSION=0x0A000003  # Windows 10 RS2 — required for DPI v2 APIs
     )
     target_link_options(TrafficMonitor PRIVATE -municode)
 endif()

@@ -13,9 +13,9 @@ void Logger::log(LogLevel level, std::string_view msg, const std::source_locatio
     if (level < min_level_) return;
 
     auto now = std::chrono::system_clock::now();
-    auto time_t = std::chrono::system_clock::to_time_t(now);
+    auto raw_time = std::chrono::system_clock::to_time_t(now);
     std::tm tm{};
-    localtime_s(&tm, &time_t);
+    localtime_s(&tm, &raw_time);
 
     const char* level_str = [level]() -> const char* {
         switch (level) {

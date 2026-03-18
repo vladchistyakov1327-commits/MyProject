@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <chrono>
 
+#ifdef _MSC_VER
 #pragma comment(lib, "iphlpapi.lib")
+#endif
 
 namespace core {
 

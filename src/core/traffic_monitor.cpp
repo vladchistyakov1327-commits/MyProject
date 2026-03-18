@@ -6,7 +6,9 @@
 
 // Link shell for APPDATA path
 #include <shlobj.h>
+#ifdef _MSC_VER
 #pragma comment(lib, "shell32.lib")
+#endif
 
 namespace core {
 
