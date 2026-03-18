@@ -2,7 +2,6 @@
 #include "../utils/format_helpers.h"
 #include <algorithm>
 #include <cmath>
-#include <format>
 
 namespace ui {
 

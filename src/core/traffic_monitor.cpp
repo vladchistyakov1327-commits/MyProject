@@ -2,7 +2,6 @@
 #include "../utils/logger.h"
 #include "../utils/format_helpers.h"
 #include "../ui/theme.h"
-#include <format>
 #include <shellapi.h>
 
 // Link shell for APPDATA path
@@ -296,9 +295,9 @@ void TrafficMonitor::update_tray_tooltip() {
     nid.uID    = kTrayIconId;
     nid.uFlags = NIF_TIP;
 
-    std::wstring tip = std::format(L"Traffic Monitor\n\u2193{} \u2191{}",
-        utils::format_speed(last_rx_),
-        utils::format_speed(last_tx_));
+    std::wstring tip = std::wstring(L"Traffic Monitor\n\u2193") +
+        utils::format_speed(last_rx_) + L" \u2191" +
+        utils::format_speed(last_tx_);
     wcscpy_s(nid.szTip, tip.c_str());
     Shell_NotifyIconW(NIM_MODIFY, &nid);
 }

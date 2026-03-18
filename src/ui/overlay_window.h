@@ -4,6 +4,7 @@
 #include <functional>
 #include "../core/persistence.h"
 #include "../core/data_collector.h"
+#include "../utils/win_helpers.h"
 
 namespace ui {
 
