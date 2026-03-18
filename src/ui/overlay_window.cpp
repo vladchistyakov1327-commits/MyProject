@@ -3,7 +3,6 @@
 #include "../utils/win_helpers.h"
 #include "../utils/format_helpers.h"
 #include "../utils/logger.h"
-#include <format>
 
 namespace ui {
 
@@ -122,7 +121,7 @@ void OverlayWindow::render() {
     std::wstring rx_str = utils::format_speed(rx_speed_);
     std::wstring tx_str = utils::format_speed(tx_speed_);
     // Full line: "↓ 1.2M/s  ↑ 256K/s | Wi-Fi"
-    std::wstring line1 = std::format(L"\u2193 {}  \u2191 {}", rx_str, tx_str);
+    std::wstring line1 = std::wstring(L"\u2193 ") + rx_str + L"  \u2191 " + tx_str;
     std::wstring line2 = iface_name_;
 
     // Create screen DC
@@ -189,7 +188,7 @@ void OverlayWindow::render() {
     GetTextExtentPoint32W(mem_dc, L"\u2193 ", 2, &arrow_sz);
 
     // Speed values after arrow
-    std::wstring rx_part = std::format(L"{}", rx_str);
+    std::wstring rx_part = rx_str;
     draw_text_shadow(mem_dc, rx_part.c_str(), margin + arrow_sz.cx, margin,
                      text_color_, RGB(0,0,0), 2);
 

@@ -2,7 +2,7 @@
 #include "theme.h"
 #include "../utils/format_helpers.h"
 #include "../utils/logger.h"
-#include <format>
+#include <cstdio>
 #include <commctrl.h>
 #include <commdlg.h>
 
@@ -352,10 +352,10 @@ void StatsWindow::draw_limit_bar(HDC hdc, int x, int y, int w,
     }
 
     // Label: "1.5 GB / 10 GB (15%)"
-    std::wstring label = std::format(L"{} / {} ({:.0f}%)",
-        utils::format_bytes(used),
-        utils::format_bytes(limit),
-        pct * 100.0);
+    wchar_t pct_buf[16];
+    swprintf(pct_buf, 16, L"%.0f%%", pct * 100.0);
+    std::wstring label = utils::format_bytes(used) + L" / " +
+                         utils::format_bytes(limit) + L" (" + pct_buf + L")";
 
     RECT lrc = { x, y + bar_h + 4, x + w, y + bar_h + 20 };
     SetTextColor(hdc, theme().text_secondary);
@@ -459,9 +459,11 @@ void StatsWindow::draw_month(HDC hdc, const RECT& rc) {
         uint32_t yr = r.key / 10000;
         uint32_t mo = (r.key / 100) % 100;
         uint32_t dy = r.key % 100;
-        std::wstring date = std::format(L"{:04d}-{:02d}-{:02d}", yr, mo, dy);
-        std::wstring info = std::format(L"\u2193{} \u2191{}",
-            utils::format_bytes(r.rx), utils::format_bytes(r.tx));
+        wchar_t date_buf[16];
+        swprintf(date_buf, 16, L"%04u-%02u-%02u", yr, mo, dy);
+        std::wstring date = date_buf;
+        std::wstring info = std::wstring(L"\u2193") + utils::format_bytes(r.rx) +
+                            L" \u2191" + utils::format_bytes(r.tx);
 
         draw_stat_row(hdc, x, y, w, date.c_str(), info);
         y += 22;
@@ -523,7 +525,9 @@ void StatsWindow::draw_alltime(HDC hdc, const RECT& rc) {
         uint32_t yr = r.key / 10000;
         uint32_t mo = (r.key / 100) % 100;
         uint32_t dy = r.key % 100;
-        std::wstring date = std::format(L"{:04d}-{:02d}-{:02d}", yr, mo, dy);
+        wchar_t date_buf[16];
+        swprintf(date_buf, 16, L"%04u-%02u-%02u", yr, mo, dy);
+        std::wstring date = date_buf;
         std::wstring info = utils::format_bytes(r.total());
         draw_stat_row(hdc, x, y, w, date.c_str(), info);
         y += 20;

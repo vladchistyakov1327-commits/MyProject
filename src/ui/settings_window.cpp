@@ -1,7 +1,6 @@
 #include "settings_window.h"
 #include "theme.h"
 #include "../utils/logger.h"
-#include <format>
 #include <commctrl.h>
 
 namespace ui {

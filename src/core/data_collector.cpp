@@ -1,9 +1,7 @@
 #include "data_collector.h"
 #include "../utils/logger.h"
-#include <wlanapi.h>
 #include <algorithm>
 #include <chrono>
-#include <format>
 
 #pragma comment(lib, "iphlpapi.lib")
 
